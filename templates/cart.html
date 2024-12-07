@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Your Cart</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+</head>
+<body>
+    <div class="dashboard-container">
+        <h1>Your Cart</h1>
+
+        <div id="cart-items">
+            <!-- Cart items will be rendered here dynamically -->
+        </div>
+
+        <div id="cart-summary">
+            <p>Total Price: $<span id="total-price">0</span></p>
+            <button onclick="proceedToCheckout()">Proceed to Checkout</button>
+        </div>
+
+        <div id="add-book-section">
+            <h2>Add Book to Cart</h2>
+            <label for="book-title">Book Title:</label>
+            <input type="text" id="book-title" placeholder="Enter book title" />
+            <label for="book-price">Price:</label>
+            <input type="number" id="book-price" placeholder="Enter price" />
+            <button onclick="addBookToCart()">Add to Cart</button>
+        </div>
+    </div>
+
+    <script>
+        // Cart array to store books (simulating a database in localStorage)
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+        // Function to render the cart
+        function renderCart() {
+            const cartItemsContainer = document.getElementById('cart-items');
+            cartItemsContainer.innerHTML = ''; // Clear previous items
+            let totalPrice = 0;
+
+            // Loop through the cart and display each book
+            cart.forEach(item => {
+                totalPrice += item.price * item.quantity;
+
+                const cartItemDiv = document.createElement('div');
+                cartItemDiv.classList.add('cart-item');
+                cartItemDiv.innerHTML = `
+                    <h3>${item.title}</h3>
+                    <p>Price: $${item.price}</p>
+                    <p>Quantity: <input type="number" value="${item.quantity}" min="1" onchange="updateQuantity(${item.id}, this.value)" /></p>
+                    <p>Total: $${item.price * item.quantity}</p>
+                    <button onclick="removeItem(${item.id})"><i class="fas fa-trash-alt"></i> Remove</button>
+                `;
+                cartItemsContainer.appendChild(cartItemDiv);
+            });
+
+            // Update the total price
+            document.getElementById('total-price').innerText = totalPrice.toFixed(2);
+        }
+
+        // Function to add a book to the cart
+        function addBookToCart() {
+            const title = document.getElementById('book-title').value;
+            const price = parseFloat(document.getElementById('book-price').value);
+
+            if (!title || isNaN(price)) {
+                alert('Please provide both title and price!');
+                return;
+            }
+
+            const newBook = {
+                id: Date.now(), // Use timestamp as a unique ID
+                title: title,
+                price: price,
+                quantity: 1
+            };
+
+            // Add the new book to the cart array
+            cart.push(newBook);
+
+            // Save the updated cart in localStorage
+            localStorage.setItem('cart', JSON.stringify(cart));
+
+            // Refresh the cart display
+            renderCart();
+
+            // Clear the input fields
+            document.getElementById('book-title').value = '';
+            document.getElementById('book-price').value = '';
+        }
+
+        // Function to update the quantity of a book in the cart
+        function updateQuantity(bookId, newQuantity) {
+            const item = cart.find(item => item.id === bookId);
+            if (item) {
+                item.quantity = parseInt(newQuantity, 10);
+                localStorage.setItem('cart', JSON.stringify(cart)); // Save to localStorage
+                renderCart(); // Re-render the cart
+            }
+        }
+
+        // Function to remove a book from the cart
+        function removeItem(bookId) {
+            cart = cart.filter(item => item.id !== bookId);
+            localStorage.setItem('cart', JSON.stringify(cart)); // Save to localStorage
+            renderCart(); // Re-render the cart
+        }
+
+        // Function to handle the checkout (just an alert for now)
+        function proceedToCheckout() {
+            alert('Proceeding to checkout...');
+            // Example: window.location.href = 'checkout.html';
+        }
+
+        // Initial render of the cart when the page loads
+        renderCart();
+    </script>
+</body>
+</html>

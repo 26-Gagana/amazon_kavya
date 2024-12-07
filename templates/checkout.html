@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - Amazon Top 50 Books</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f8f8;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #ddd;
+        }
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+        .item-info {
+            flex: 2;
+        }
+        .item-price, .item-quantity {
+            flex: 1;
+            text-align: center;
+        }
+        .checkout-total {
+            text-align: right;
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-top: 20px;
+        }
+        .checkout-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button.add-more {
+            background-color: #007bff;
+            color: #fff;
+        }
+        button.proceed {
+            background-color: #28a745;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Checkout</h1>
+        <div id="cart-items">
+            <!-- Cart items will be dynamically added here -->
+        </div>
+
+        <div class="checkout-total">
+            Total: $<span id="total-price">0.00</span>
+        </div>
+
+        <div class="checkout-buttons">
+            <button class="add-more" onclick="window.location.href='/books'">Add More Books</button>
+            <button class="proceed" onclick="proceedToCheckout()">Proceed to Payment</button>
+        </div>
+    </div>
+
+    <script>
+        // Example data for cart items
+        const cart = [
+            { title: "Book 1", price: 15.99, quantity: 2 },
+            { title: "Book 2", price: 9.99, quantity: 1 },
+            { title: "Book 3", price: 20.00, quantity: 1 }
+        ];
+
+        function loadCart() {
+            const cartItemsDiv = document.getElementById('cart-items');
+            const totalPriceSpan = document.getElementById('total-price');
+            let total = 0;
+
+            cart.forEach(item => {
+                const cartItemDiv = document.createElement('div');
+                cartItemDiv.className = 'cart-item';
+
+                cartItemDiv.innerHTML = `
+                    <div class="item-info">${item.title}</div>
+                    <div class="item-price">$${item.price.toFixed(2)}</div>
+                    <div class="item-quantity">${item.quantity}</div>
+                `;
+
+                cartItemsDiv.appendChild(cartItemDiv);
+                total += item.price * item.quantity;
+            });
+
+            totalPriceSpan.textContent = total.toFixed(2);
+        }
+
+        function proceedToCheckout() {
+            alert("Proceeding to payment...");
+            // Add logic to redirect to a payment gateway or next step
+        }
+
+        // Load cart items on page load
+        document.addEventListener('DOMContentLoaded', loadCart);
+    </script>
+</body>
+</html>

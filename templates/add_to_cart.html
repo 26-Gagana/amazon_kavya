@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Book to Cart</title>
+</head>
+<body>
+    <h1>Add a Book to Your Cart</h1>
+    <label for="book-title">Book Title:</label>
+    <input type="text" id="book-title" placeholder="Enter book title" />
+    <label for="book-price">Price:</label>
+    <input type="number" id="book-price" placeholder="Enter price" />
+    <button onclick="addBookToCart()">Add to Cart</button>
+
+    <script>
+        function addBookToCart() {
+            const title = document.getElementById('book-title').value;
+            const price = parseFloat(document.getElementById('book-price').value);
+
+            if (!title || isNaN(price)) {
+                alert('Please provide both title and price!');
+                return;
+            }
+
+            const newBook = {
+                id: Date.now(), // Use timestamp as unique ID
+                title: title,
+                price: price,
+                quantity: 1
+            };
+
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            cart.push(newBook);
+            localStorage.setItem('cart', JSON.stringify(cart));
+
+            alert(`${title} has been added to your cart.`);
+            window.location.href = 'cart.html'; // Redirect to cart page
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Amazon Top 50 Books</title>
+    <!-- Include FontAwesome for cart icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* Header */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #131921;
+    color: white;
+}
+
+header .logo {
+    display: flex;
+    align-items: center;
+}
+
+header .logo img {
+    width: 50px;
+    height: auto;
+    margin-right: 10px;
+}
+
+header .logo h1 {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+header .nav-address {
+    display: flex;
+    align-items: center;
+}
+
+header .nav-address p.add-first {
+    font-size: 0.9rem;
+}
+
+header .nav-address .add-icon {
+    display: flex;
+    align-items: center;
+    margin-left: 10px;
+}
+
+header .nav-address .add-icon i {
+    margin-right: 10px;
+}
+header.nav-address p{
+margin: 5px 0;
+}
+
+header .nav-search select {
+    padding: 10px;
+    font-size: 1rem;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+header .nav {
+    display: flex;
+    align-items: center;
+}
+
+header .nav .cart {
+    position: relative;
+    margin-left: 30px;
+    cursor: pointer;
+}
+
+header .nav .cart img {
+    width: 50px;
+    height: auto;
+}
+
+header .nav .cart .cart-count {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: red;
+    color: white;
+    font-size: 0.8rem;
+    padding: 2px 6px;
+    border-radius: 50%;
+}
+
+.nav a {
+    margin: 0 15px;
+    text-decoration: none;
+    color: #0073e6;
+    font-size: 18px;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+/* Main Content */
+.main {
+    padding: 20px;
+    text-align: center;
+}
+
+.main .search-bar {
+    margin-bottom: 20px;
+}
+
+.main .search-bar input {
+    padding: 10px;
+    width: 300px;
+    font-size: 1rem;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+.main .search-bar button {
+    padding: 10px 15px;
+    background-color: #131921;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.main .search-bar button:hover {
+    background-color: #f8a100;
+}
+
+/* Book List */
+.book-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.book-card {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.book-card img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+.book-card p {
+    font-size: 1rem;
+    margin: 5px 0;
+}
+
+.book-card button {
+    background-color: #f8a100;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 1rem;
+    color: white;
+}
+
+.book-card button:hover {
+    background-color: #131921;
+}
+
+/* Footer */
+footer {
+    background-color: #232f3e;
+    color: white;
+    padding: 20px;
+    margin-top: auto;
+}
+
+.foot-panel1 {
+    text-align: center;
+    padding: 10px;
+    background-color: #37475a;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+
+
+.foot-panel2 {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding: 20px 0;
+    font-size: 14px;
+}
+
+.foot-panel2 ul {
+    list-style: none;
+    margin: 10px;
+}
+
+.foot-panel2 ul li {
+    margin: 5px 0;
+}
+
+.foot-panel2 ul a {
+    color: white;
+    text-decoration: none;
+}
+
+.foot-panel2 ul a:hover {
+    text-decoration: underline;
+}
+
+.foot-panel4 {
+    text-align: center;
+    font-size: 12px;
+    padding: 10px 0;
+    border-top: 1px solid #ddd;
+}
+
+.foot-panel4 a {
+    color: #ddd;
+    text-decoration: none;
+    margin: 0 5px;
+}
+
+.foot-panel4 a:hover {
+    text-decoration: underline;
+}
+
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo">
+        <img src="/static/logo1.png" alt="Logo">
+        <h1>Amazon Top 50 Books</h1>
+    </div>
+    <div class="nav-address">
+            <a href="/analysis" class="add-first">Analysis</a>
+
+            </div>
+     <div class="nav-address">
+            <a href="/add-book" class="add-first">Add book</a>
+
+            </div>
+    <div class="nav-address">
+            <p class="add-first">Deliver to</p>
+            <div class="add-icon">
+                <i class="fa-solid fa-location-crosshairs"></i>
+                <p class="add-second">India</p>
+            </div>
+<div class="nav-search">
+            <select class="search-select">
+                <option selected="selected">All</option>
+                <option>Arts &amp; Crafts</option>
+                <option>Automotive</option>
+                <option>Baby</option>
+                <option>Beauty &amp; Personal Care</option>
+                <option>Books</option>
+                <option>Boys' Fashion</option>
+                <option>Computers</option>
+                <option>Deals</option>
+                <option>Digital Music</option>
+                <option>Electronics</option>
+                <option>Girls' Fashion</option>
+                <option>Health &amp; Household</option>
+                <option>Home &amp; Kitchen</option>
+                <option>Industrial &amp; Scientific</option>
+                <option>Kindle Store</option>
+                <option>Luggage</option>
+                <option>Men's Fashion</option>
+                <option>Movies &amp; TV</option>
+                <option>Music, CDs &amp; Vinyl</option>
+                <option>Pet Supplies</option>
+                <option>Prime Video</option>
+                <option>Software</option>
+                <option>Sports &amp; Outdoors</option>
+                <option>Tools &amp; Home Improvement</option>
+                <option>Toys &amp; Games</option>
+                <option>Video Games</option>
+                <option>Women's Fashion</option>
+            </select>
+
+        </div>
+    <div class="nav">
+       <div class="cart" onclick="window.location.href='cart'">
+    <!-- Cart Icon Image -->
+    <img src="/static/logo2.png" alt="Cart">
+    <span class="cart-count" id="cartCount">0</span>
+</div>
+
+        <a href="/logout">Logout</a>
+    </div>
+    </div>
+</header>
+<div class="main">
+    <div class="search-bar">
+        <input type="text" placeholder="Search books..." id="searchInput">
+        <button onclick="searchBooks()">Search</button>
+    </div>
+
+    <!-- Insert the book display code here -->
+  <div style="display: flex; flex-wrap: wrap; gap: 15px; justify-content: center; padding: 15px;">
+    {% for book in books %}
+    <div style="width: 300px; border: 1px solid #ddd; border-radius: 10px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); overflow: hidden; transition: transform 0.3s; font-family: Arial, sans-serif;">
+        <div style="position: relative;">
+            <div style="height: 200px; overflow: hidden;">
+                <img src="{{ book.image_url }}" alt="{{ book.name }}" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
+            <!-- Add Book Name and Price Below the Image -->
+            <div style="padding: 15px;">
+                <h4 style="font-size: 18px; font-weight: bold; margin-bottom: 10px;">{{ book.name }}</h4>
+                <p style="font-size: 16px; color: #ff9900; font-weight: bold;">${{ book.price }}</p>
+                <!-- Add to Cart Button -->
+                <button onclick="addToCart('{{ book.name }}', {{ book.price }})" style="background-color: #f8a100; border: none; padding: 10px 20px; cursor: pointer; border-radius: 4px; font-size: 1rem; color: white;">
+                    Add to Cart
+                </button>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+
+
+
+<script>
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    updateCartCount();
+
+    function addToCart(bookTitle, bookPrice) {
+        const book = { title: bookTitle, price: bookPrice, quantity: 1 };
+        cart.push(book);
+        localStorage.setItem('cart', JSON.stringify(cart));
+        updateCartCount();
+        alert(`"${bookTitle}" added to your cart!`);
+    }
+
+    function updateCartCount() {
+        const cartCount = document.getElementById('cartCount');
+        cartCount.innerText = cart.length;
+    }
+
+    function viewCart() {
+        window.location.href = '/templates/cart.html'; // Redirect to cart page
+    }
+
+    function searchBooks() {
+        const searchQuery = document.getElementById('searchInput').value.toLowerCase();
+        const books = document.querySelectorAll('.book-card');
+        books.forEach(book => {
+            const title = book.querySelector('p strong').innerText.toLowerCase();
+            if (title.includes(searchQuery)) {
+                book.style.display = 'block';
+            } else {
+                book.style.display = 'none';
+            }
+        });
+    }
+</script>
+
+</div>
+<footer>
+        <div class="foot-panel1">
+    <button onclick="scrollToTop()" class="back-to-top-btn">Back to Top</button>
+        </div>
+
+
+       <script>
+    function scrollToTop() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+</script>
+        <div class="foot-panel2">
+            <ul>
+                <li>Get to Know Us</li>
+                <li><a href="#">Careers</a></li>
+                <li><a href="#">Amazon Newsletter</a></li>
+                <li><a href="#">About Amazon</a></li>
+                <li><a href="#">Accessibility</a></li>
+                <li><a href="#">Sustainability</a></li>
+                <li><a href="#">Press Center</a></li>
+                <li><a href="#">Investor Relations</a>
+                <li><a href="#">Amazon Science</a></li>
+                </ul>
+                <ul>
+                    <li>Make Money with Us</li>
+                    <li><a href="#">Sell products on Amazon</a></li>
+                    <li><a href="#">Sell on Amazon Business</a></li>
+                    <li><a href="#">Sell apps on Amazon</a></li>
+                    <li><a href="#">Become an Affiliate</a></li>
+                    <li><a href="#">Advertise Your Products</a></li>
+                    <li><a href="#">Self-Publish with Us</a></li>
+                    <li><a href="#">Host an Amazon Hub</a></li>
+                    <li><a href="#">See More Make Money with Us</a></li>
+                </ul>
+                <ul>
+                    <li>Amazon Payment Products</li>
+                    <li><a href="#">Amzon Business Card</a></li>
+                    <li><a href="#">Shop with Points</a></li>
+                    <li><a href="#">Reload Your Balance</a></li>
+                    <li><a href="#">Amazon Currency Converter</a></li>
+                </ul>
+                <ul>
+                    <li>Let Us Help You</li>
+                    <li><a href="#">Amazon and COVID-19</a></li>
+                    <li><a href="#">Your Account</a></li>
+                    <li><a href="#">Your Orders</a></li>
+                    <li><a href="#">Shipping Rates & Policies</a></li>
+                    <li><a href="#">Return & Replacements</a></li>
+                    <li><a href="#">Manage Your Content and Devices</a></li>
+                    <li><a href="#">Amazon Assistant</a></li>
+                    <li><a href="#">Help</a></li>
+                </ul>
+            </div>
+
+            <div class="foot-panel3">
+                <div class="logo">
+
+                </div>
+            </div>
+
+            <div class="foot-panel4">
+                <div class="pages">
+                    <a href="#">Conditions of Use</a>
+                    <a href="#">Privacy Notice</a>
+                    <a href="#">Your Ads Privacy Choices</a>
+                </div>
+                <div class="copyright">
+                    © 1996-2023, Amazon.com, Inc. or its affiliates
+                </div>
+            </div>
+        </footer>
+</body>
+</html>

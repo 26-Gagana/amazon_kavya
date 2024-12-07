@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Books</title>
+</head>
+<body>
+    <h1>Manage Books</h1>
+
+    <!-- Form to Add New Book -->
+    <form method="POST" action="/add-book">
+        <h2>Add a New Book</h2>
+        <label>Name:</label><input type="text" name="name" required><br>
+        <label>Price ($):</label><input type="number" step="0.01" name="price" required><br>
+        <label>Image URL:</label><input type="text" name="image_url" required><br>
+        <button type="submit">Add Book</button>
+        <a href="/dashboard">Back to Dashboard</a>
+    </form>
+
+    <hr>
+
+    <!-- Table to Display Books with Edit and Delete Options -->
+    <h2>Books List</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Price ($)</th>
+                <th>Image</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for book in books %}
+            <tr>
+                <td>{{ book.id }}</td>
+                <td>{{ book.name }}</td>
+                <td>{{ book.price }}</td>
+                <td><img src="{{ book.image_url }}" alt="{{ book.name }}" width="50"></td>
+                <td>
+                    <a href="/edit-book/{{ book.id }}">Edit</a>
+                    <form method="POST" action="/delete-book/{{ book.id }}" style="display:inline;">
+                        <button type="submit" onclick="return confirm('Are you sure you want to delete this book?');">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
